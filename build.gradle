@@ -10,9 +10,14 @@ buildscript {
     classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7-SNAPSHOT'
   }
 }
+
+plugins {
+  id 'com.github.johnrengelman.shadow' version '8.1.1'
+}
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'org.spongepowered.mixin'
+
 
 // This initializes the config. Please try to modify the variables in the config file, if needed, add more if you see a reason to.
 ext.config = parseConfig(file('build.properties'))
@@ -60,6 +65,12 @@ minecraft {
 sourceSets.test.java.srcDirs = [] // Don't generate src/test/java
 sourceSets.test.resources.srcDirs = [] // Don't generate src/test/resources
 
+configurations {
+  packIntoJar {
+    transitive = false
+  }
+}
+
 repositories {
   maven {
     url 'https://www.cursemaven.com'
@@ -67,10 +78,20 @@ repositories {
       includeGroup 'curse.maven'
     }
   }
+
+  maven {
+    url "https://maven.infernalstudios.org/${config.CONFIG_VERSION.endsWith('SNAPSHOT') ? 'snapshots' : 'releases'}"
+    content {
+      includeGroup 'org.infernalstudios'
+    }
+  }
 }
 
 dependencies {
   minecraft "net.minecraftforge:forge:${config.MINECRAFT_VERSION}-${config.FORGE_VERSION}"
+
+  implementation "org.infernalstudios:config:${config.CONFIG_VERSION}"
+  packIntoJar "org.infernalstudios:config:${config.CONFIG_VERSION}"
   
   // Dev only
   implementation fg.deobf("curse.maven:not-enough-crashes-forge-442354:4684047")
@@ -79,7 +100,23 @@ dependencies {
   annotationProcessor "org.spongepowered:mixin:${config.MIXIN_VERSION}:processor"
 }
 
+mixin {
+  add sourceSets.main, "${config.ARTIFACT}.refmap.json"
+}
+
+shadowJar {
+  archiveClassifier = ''
+  configurations = [project.configurations.packIntoJar]
+  relocate 'org.infernalstudios.config', "${config.GROUP}.${config.ARTIFACT}.config.library"
+}
+
+reobf {
+  shadowJar {}
+}
+
 jar {
+  archiveClassifier = 'base'
+  finalizedBy 'reobfJar'
   manifest {
     attributes([
       'Specification-Title'   : config.TITLE,
@@ -93,11 +130,14 @@ jar {
   }
 }
 
-jar.finalizedBy('reobfJar')
-
-mixin {
-  add sourceSets.main, "${config.ARTIFACT}.refmap.json"
+task sourcesJar(type: Jar) {
+  archiveClassifier = 'sources'
+  from sourceSets.main.allJava
 }
+
+tasks.build.dependsOn sourcesJar
+tasks.build.dependsOn shadowJar
+tasks.build.dependsOn reobfShadowJar
 
 // Config parse function
 def parseConfig(File config) {
