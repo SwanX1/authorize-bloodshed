@@ -1,0 +1,33 @@
+modLoader="javafml"
+loaderVersion="[36,)"
+license="All rights reserved"
+issueTrackerURL="https://github.com/SwanX1/authorize-bloodshed/issues"
+
+[[mods]]
+  modId="authorizebloodshed"
+  version="${file.jarVersion}"
+  displayName="Authorize Bloodshed"
+  # See: https://mcforge.readthedocs.io/en/latest/gettingstarted/autoupdate/
+  updateJSONURL="https://cernavskis.dev/api/authorizebloodshed.json"
+  displayURL="https://github.com/SwanX1/authorize-bloodshed"
+  #logoFile="examplemod.png"
+  credits="SwanX1"
+  authors="SwanX1"
+  description='''
+  TODO
+  Read more: https://github.com/SwanX1/authorize-bloodshed/wiki
+  '''
+
+[[dependencies.authorizebloodshed]]
+  modId="forge"
+  mandatory=true
+  versionRange="[36.2.20,)"
+  ordering="NONE"
+  side="BOTH"
+
+[[dependencies.authorizebloodshed]]
+  modId="minecraft"
+  mandatory=true
+  versionRange="[1.20,1.21)"
+  ordering="NONE"
+  side="BOTH"
