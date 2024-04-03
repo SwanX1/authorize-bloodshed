@@ -39,8 +39,8 @@ public class AuthorizeBloodshed {
     
     try {
       ABConfig.INSTANCE = Config
-      .builder(FMLPaths.CONFIGDIR.get().resolve("foodeffects-common.toml"))
-      .loadClass(ABConfig.class)
+      .builder(FMLPaths.CONFIGDIR.get().resolve("authorizebloodshed-common.toml"))
+      .loadClass(ABConfig.class, true)
       .build();
     } catch (IllegalStateException | IllegalArgumentException | IOException | ParsingException e) {
       throw new RuntimeException(

@@ -36,7 +36,7 @@ public class RunFromExplodingCreeperGoal extends Goal {
   private List<Creeper> getNearbyExplodingCreepers() {
     return this.mob.level().getEntitiesOfClass(
       Creeper.class,
-      AABB.ofSize(this.mob.position(), ABConfig.explodingCreeperDetectionRange, ABConfig.explodingCreeperDetectionRange, ABConfig.explodingCreeperDetectionRange),
+      AABB.ofSize(this.mob.position(), ABConfig.AI.RunFromExplodingCreepers.detectionRange, ABConfig.AI.RunFromExplodingCreepers.detectionRange, ABConfig.AI.RunFromExplodingCreepers.detectionRange),
       this::canCreeperAffect
     );
   }

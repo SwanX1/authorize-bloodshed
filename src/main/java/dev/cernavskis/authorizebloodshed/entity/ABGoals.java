@@ -8,7 +8,7 @@ import net.minecraft.world.entity.PathfinderMob;
 public class ABGoals {
   public static void addToNewEntity(Mob mob) {
     if (mob instanceof PathfinderMob pathfinderMob) {
-      if (ABConfig.runFromExplodingCreepers) {
+      if (ABConfig.AI.RunFromExplodingCreepers.enabled) {
         pathfinderMob.goalSelector.addGoal(3, new RunFromExplodingCreeperGoal(pathfinderMob));
       }
     }

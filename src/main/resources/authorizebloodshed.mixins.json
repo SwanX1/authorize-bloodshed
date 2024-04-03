@@ -8,7 +8,11 @@
     "defaultRequire": 1
   },
   "mixins": [
-    "common.accessors.CreeperAccessor"
+    "common.accessors.CreeperAccessor",
+    "common.accessors.SwellGoalAccessor",
+    "common.mixins.EnderManMixin",
+    "common.mixins.RabbitMixin",
+    "common.mixins.SwellGoalMixin"
   ],
   "client": [
   ]
