@@ -1,0 +1,49 @@
+name: Publish
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  publish:
+    runs-on: ubuntu-20.04
+    steps:
+
+      - name: Checkout Repository
+        uses: actions/checkout@master
+
+      - name: Validate Gradle Wrapper
+        uses: gradle/wrapper-validation-action@v2
+
+      - name: Setup JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'adopt'
+          java-version: '17'
+          cache: 'gradle'
+          cache-dependency-path: |
+            **/*.gradle
+            build.properties
+            gradle.properties
+
+      - name: Gradle Build
+        run: ./gradlew build
+
+      - name: Create AI generated changelog
+        run: node .github/scripts/ai-changelog.js > changelog.txt
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+
+      - name: Get the version
+        id: get_version
+        run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/}
+
+      - name: Create GitHub Release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "./build/libs/*"
+          token: ${{ secrets.GITHUB_TOKEN }}
+          name: Release ${{ steps.get_version.outputs.VERSION }}
+          bodyFile: changelog.txt
+
