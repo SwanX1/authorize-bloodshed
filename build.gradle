@@ -105,6 +105,7 @@ mixin {
 }
 
 shadowJar {
+  minimize()
   archiveClassifier = ''
   configurations = [project.configurations.packIntoJar]
   relocate 'org.infernalstudios.config', "${config.GROUP}.${config.ARTIFACT}.config.library"
