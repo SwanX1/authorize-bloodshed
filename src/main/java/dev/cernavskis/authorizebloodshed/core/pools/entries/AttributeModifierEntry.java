@@ -36,7 +36,7 @@ public class AttributeModifierEntry extends WeightedEntry {
 
   public static AttributeModifierEntry deserialize(Config config) {
     return new AttributeModifierEntry(
-      config.getInt("weight"),
+      config.getIntOrElse("weight", 0),
       new ResourceLocation(config.get("attribute")),
       NumberRange.deserialize(config.get("range"))
     );

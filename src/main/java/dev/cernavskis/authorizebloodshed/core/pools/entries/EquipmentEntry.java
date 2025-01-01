@@ -20,7 +20,7 @@ public class EquipmentEntry extends WeightedEntry {
 
   public static EquipmentEntry deserialize(Config config) {
     return new EquipmentEntry(
-      config.getInt("weight"),
+      config.getIntOrElse("weight", 1),
       ItemEntry.deserialize(config.get("item")),
       EquipmentSlot.byName(config.get("slot"))
     );

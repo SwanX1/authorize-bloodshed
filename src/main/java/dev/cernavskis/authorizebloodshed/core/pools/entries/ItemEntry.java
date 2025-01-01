@@ -92,14 +92,14 @@ public class ItemEntry extends WeightedEntry {
 
   public static ItemEntry deserialize(Config config) {
     ItemEntry itemEntry = new ItemEntry(
-      config.getInt("weight"),
+      config.getIntOrElse("weight", 1),
       new ResourceLocation(config.get("item")),
-      config.getOrElse("nbt", () -> ""),
-      NumberRange.deserialize(config.get("damage")).toInt(),
-      NumberRange.deserialize(config.get("count")).toInt()
+      config.getOrElse("nbt", ""),
+      NumberRange.deserialize(config.getOrElse("damage", 0)).toInt(),
+      NumberRange.deserialize(config.getOrElse("count", 1)).toInt()
     );
 
-    config.<List<Config>>get("enchantments").stream().map(EnchantmentEntry::deserialize).forEach(itemEntry::addEnchantmentEntry);
+    config.<List<Config>>getOrElse("enchantments", List.of()).stream().map(EnchantmentEntry::deserialize).forEach(itemEntry::addEnchantmentEntry);
 
     return itemEntry;
   }

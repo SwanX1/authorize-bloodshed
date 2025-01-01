@@ -52,7 +52,7 @@ public class EffectEntry extends WeightedEntry {
 
   public static EffectEntry deserialize(Config config) {
     return new EffectEntry(
-      config.getInt("weight"),
+      config.getIntOrElse("weight", 0),
       new ResourceLocation(config.get("effect")),
       NumberRange.deserialize(config.get("amplifier")).toInt()
     );

@@ -43,7 +43,7 @@ public class EnchantmentEntry extends WeightedEntry {
 
   public static EnchantmentEntry deserialize(Config config) {
     return new EnchantmentEntry(
-      config.getInt("weight"),
+      config.getIntOrElse("weight", 0),
       new ResourceLocation(config.get("enchantment")),
       NumberRange.deserialize(config.get("level")).toInt()
     );

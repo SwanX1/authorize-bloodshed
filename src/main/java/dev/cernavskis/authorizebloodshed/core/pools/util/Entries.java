@@ -19,6 +19,10 @@ public class Entries<T extends WeightedEntry> implements Collection<T> {
   private int totalWeight = 0;
 
   public T getRandomWeighted(RandomSource source) {
+    if (this.totalWeight == 0) {
+      return null;
+    }
+
     int random = source.nextInt(this.totalWeight);
     int current = 0;
 

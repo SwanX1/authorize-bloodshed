@@ -107,9 +107,10 @@ public class EntityModifier {
   public static EntityModifier deserialize(Config config) {
 
     EntityModifier pool = new EntityModifier(new ResourceLocation(config.get("entity")));
-    config.<List<Config>>get("attributes").stream().map(entry -> EntrySerialization.<AttributeModifierEntry>deserializeEntry(entry, AttributeModifierEntry.identifier)).forEach(pool::addAttribute);
-    config.<List<Config>>get("equipment").stream().map(entry -> EntrySerialization.<EquipmentEntry>deserializeEntry(entry, EquipmentEntry.identifier)).forEach(pool::addEquipment);
-    config.<List<Config>>get("effects").stream().map(entry -> EntrySerialization.<EffectEntry>deserializeEntry(entry, EffectEntry.identifier)).forEach(pool::addEffect);
+
+    config.<List<Config>>getOrElse("attributes", List.of()).stream().map(entry -> EntrySerialization.<AttributeModifierEntry>deserializeEntry(entry, AttributeModifierEntry.identifier)).forEach(pool::addAttribute);
+    config.<List<Config>>getOrElse("equipment", List.of()).stream().map(entry -> EntrySerialization.<EquipmentEntry>deserializeEntry(entry, EquipmentEntry.identifier)).forEach(pool::addEquipment);
+    config.<List<Config>>getOrElse("effects", List.of()).stream().map(entry -> EntrySerialization.<EffectEntry>deserializeEntry(entry, EffectEntry.identifier)).forEach(pool::addEffect);
     // config.<List<Config>>get("custom").stream().map(EntrySerialization::<CustomEntry>deserializeEntry).forEach(pool::addCustom);
 
     return pool;
