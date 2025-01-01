@@ -40,5 +40,3 @@ jobs:
           artifacts: "./build/libs/*"
           token: ${{ secrets.GITHUB_TOKEN }}
           name: Release ${{ steps.get_version.outputs.VERSION }}
-          bodyFile: changelog.txt
-
