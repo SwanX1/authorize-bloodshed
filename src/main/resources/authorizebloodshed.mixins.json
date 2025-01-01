@@ -11,8 +11,10 @@
     "common.accessors.CreeperAccessor",
     "common.accessors.SwellGoalAccessor",
     "common.mixins.EnderManMixin",
+    "common.mixins.NearestHealableRaiderTargetGoalMixin",
     "common.mixins.RabbitMixin",
-    "common.mixins.SwellGoalMixin"
+    "common.mixins.SwellGoalMixin",
+    "common.mixins.WitchMixin"
   ],
   "client": [
   ]

@@ -98,6 +98,11 @@ dependencies {
   implementation fg.deobf("curse.maven:spark-361579:4738952")
 
   annotationProcessor "org.spongepowered:mixin:${config.MIXIN_VERSION}:processor"
+
+  compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:0.3.5"))
+  implementation(jarJar("io.github.llamalad7:mixinextras-forge:0.3.5")) {
+    jarJar.ranged(it, "[0.3.5,)")
+  }
 }
 
 mixin {

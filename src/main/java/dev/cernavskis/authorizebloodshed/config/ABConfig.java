@@ -36,7 +36,49 @@ public class ABConfig {
       @Configurable(description = "Detection range (in blocks) for exploding creepers")
       public static int detectionRange = 10;
     }
+
+    @Category("witchesbuffraiders")
+    public static class WitchesBuffRaiders {
+      @Configurable(description = "Should Witches heal Illagers")
+      public static boolean enabled = true;
+
+      @Configurable(description = "Farthest a Witch will go to buff an illager")
+      public static int buffRange = 25;
+
+      @Configurable(description = "How many ticks between each buff (20 ticks = 1 second)")
+      public static int buffCooldown = 100;
+
+      @Configurable(description = "Should Witches heal Illagers with a regeneration potion")
+      public static boolean useRegenPotion = true;
+
+      @Configurable(description = "Should Witches heal Illagers with a instant health potion")
+      public static boolean useInstantHealthPotion = true;
+
+      @Configurable(description = "Should Witches buff Illagers with a strength potion")
+      public static boolean useStrengthPotion = true;
+
+      @Configurable(description = "Should Witches buff Illagers with a speed potion")
+      public static boolean useSpeedPotion = true;
+
+      @Configurable(description = "Should Witches buff Illagers with a fire resistance potion")
+      public static boolean useFireResistancePotion = true;
+
+      @Configurable(description = "Should Witches buff Illagers with a resistance potion")
+      public static boolean useResistancePotion = true;
   
+      @Category("raidersruntowitches")
+      public static class RaidersRunToWitches {
+        @Configurable(description = "Should Illagers run to Witches for healing?")
+        public static boolean enabled = true;
+
+        @Configurable(description = "Detection range (in blocks) for Witches")
+        public static int detectionRange = 25;
+
+        @Configurable(description = "Radius (in blocks) around the Witch that Illagers will approach")
+        public static int approachRadius = 8;
+      }
+    }
+
     @Category("endermenchase")
     public static class EndermenChase {
       @Configurable(description = "Should Endermen chase slower when they're aggroed?")
