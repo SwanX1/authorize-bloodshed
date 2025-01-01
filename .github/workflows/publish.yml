@@ -30,11 +30,6 @@ jobs:
       - name: Gradle Build
         run: ./gradlew build
 
-      - name: Create AI generated changelog
-        run: node .github/scripts/ai-changelog.js > changelog.txt
-        env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-
       - name: Get the version
         id: get_version
         run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/}
